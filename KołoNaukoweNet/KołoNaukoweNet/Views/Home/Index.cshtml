@@ -1,0 +1,36 @@
+﻿@using KołoNaukoweNet.Models;
+@model List<User>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<p>@ViewBag.Message</p>
+<p>@ViewData["Message"]</p>
+
+@foreach (var user in Model)
+{
+    <p>@user.UserName @user.Surname</p>
+}
+
+@if (string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>Nie ma wiadomości w ViewBag</p>
+}
+
+<div @if (string.IsNullOrEmpty(ViewBag.Message)) { <text> class="error" </text>} 
+     style="height:400px;width:400px;">
+</div>
+<div id="ajaxContent">
+
+</div>
+
+<script>
+    $.ajax({
+        type: "get",
+        url: "/Home/GetBanner",
+        success: function (data) {
+            $("#ajaxContent").html(data);
+        }
+    });
+</script>
